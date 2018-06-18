@@ -1,6 +1,10 @@
 {
     "extends": "../tslint.json",
     "rules": {
+        "no-inferrable-types": false,
+        "max-line-length": false,
+        "quotemark": false,
+        "no-trailing-whitespace": false,
         "directive-selector": [
             true,
             "attribute",
@@ -8,7 +12,7 @@
             "camelCase"
         ],
         "component-selector": [
-            true,
+            false,
             "element",
             "app",
             "kebab-case"

@@ -1,6 +1,11 @@
 .example-card {
-    max-width: 400px;
-  }
+  max-width: 600px;
+}
+
+div {color: red}
+
+h2 {
+  text-align: center;
+}
 
 
-  div {color: red}
