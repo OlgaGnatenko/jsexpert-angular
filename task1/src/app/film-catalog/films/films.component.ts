@@ -9,12 +9,12 @@ import { FilmService } from '../film.service';
 export class FilmsComponent implements OnInit {
 
   films: object[];
-  
-  constructor(filmsService: FilmService) { 
-    this.films  = filmsService.films ;
+
+  constructor(private filmsService: FilmService) {
   }
-  
-  ngOnInit() { 
+
+  ngOnInit() {
+    this.films = this.filmsService.films;
   }
-  
+
 }
