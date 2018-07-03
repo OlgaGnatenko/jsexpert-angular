@@ -20,3 +20,7 @@
   align-items: stretch;
   flex-wrap: wrap;
 }
+
+.mat-form-field {
+  width: 200px;
+}

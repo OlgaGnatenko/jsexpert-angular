@@ -16,8 +16,8 @@ import { FilmItemComponent } from './film-item/film-item.component';
     SharedModule
   ],
   declarations: [
-    MainComponent, 
-    FilmsListComponent, 
+    MainComponent,
+    FilmsListComponent,
     FilmItemComponent
   ]
 })
