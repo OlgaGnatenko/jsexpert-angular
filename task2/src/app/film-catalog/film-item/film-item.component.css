@@ -46,7 +46,6 @@
     margin-bottom: 0;
     bottom: 0;   
     padding: 0;
-    background-color: red;
 }
 
 .mat-card-content {
@@ -64,3 +63,8 @@
     margin-bottom: 0;
     bottom: 0;
 }
+
+.heart {
+    color: red;
+    font-size: 20px;
+  }

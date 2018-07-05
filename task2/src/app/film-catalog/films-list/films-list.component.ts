@@ -14,6 +14,7 @@ export interface SortingOption {
 })
 
 export class FilmsListComponent implements OnInit {
+  favoritesCount = 0;
   films: Array<Film>;
   sortingOptions: SortingOption[] = [
     {
@@ -25,7 +26,6 @@ export class FilmsListComponent implements OnInit {
       viewValue: 'По алфавиту: Z-A'
     }
   ];
-  currentSortingValue = "";
 
   constructor(public filmsService: FilmService) {
   }
@@ -40,12 +40,11 @@ export class FilmsListComponent implements OnInit {
     this.films = this.filmsService.getFilms();
   }
 
-  sortFilms(target) {
-    let value = "";
-    if (target) {
-      value = target.value;
+  sortFilms(evt) {
+    if (!evt) {
+      return;
     }
-    console.log("BEFORE", value, this.films);
+    const { value } = evt;
     switch (value) {
       case 'ASC':
         this.films.sort((a: Film, b: Film): number => {
@@ -62,7 +61,14 @@ export class FilmsListComponent implements OnInit {
         });
         break;
     }
-    console.log(value, this.films);
+  }
+
+  updateFavorites(evt) {
+    if (!evt) {
+      return;
+    }
+    const {filmId, addToFavorite} = evt;
+    addToFavorite ? this.favoritesCount++ : this.favoritesCount--;
   }
 
 }

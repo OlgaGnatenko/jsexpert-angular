@@ -1,11 +1,11 @@
 <mat-card class="menu-card">
     <mat-toolbar class="menu-toolbar">
         <mat-toolbar-row>
-            <span>В избранное добавлено: 5 элементов</span>
+            <span>В избранное добавлено: {{favoritesCount}} элементов</span>
             <span class="example-spacer"></span>
             <div>
                 <mat-form-field>
-                    <mat-select placeholder="Сортировка" (selectionChange)="sortFilms($event.target)">
+                    <mat-select placeholder="Сортировка" (selectionChange)="sortFilms($event)">
                         <mat-option [value]="sortingOption.value " *ngFor="let sortingOption of sortingOptions ">
                             {{sortingOption.viewValue}}
                         </mat-option>
@@ -15,7 +15,7 @@
         </mat-toolbar-row>
     </mat-toolbar>
 </mat-card>
-<div class="films-cards ">
-    <app-film-item [film]="film " *ngFor="let film of films ">
+<div class="films-cards" >
+    <app-film-item [film]="film " *ngFor="let film of films " (changeFavorite)="updateFavorites($event)">
     </app-film-item>
 </div>

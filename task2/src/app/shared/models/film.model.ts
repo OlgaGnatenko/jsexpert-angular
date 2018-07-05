@@ -4,4 +4,5 @@ export class Film {
   year: number;
   imgUrl: string;
   description: string;
+  favorite: boolean;
 }
