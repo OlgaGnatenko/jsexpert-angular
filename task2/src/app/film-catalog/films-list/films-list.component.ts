@@ -67,8 +67,8 @@ export class FilmsListComponent implements OnInit {
     if (!evt) {
       return;
     }
-    const {filmId, addToFavorite} = evt;
-    addToFavorite ? this.favoritesCount++ : this.favoritesCount--;
+    const {filmId, favorite} = evt;
+    favorite ? this.favoritesCount++ : this.favoritesCount--;
   }
 
 }

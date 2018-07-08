@@ -3,7 +3,7 @@ import { Film } from '../../shared/models/film.model';
 
 interface ChangeFavoriteEvent {
   filmId: number;
-  addToFavorite: boolean;
+  favorite: boolean;
 }
 
 @Component({
@@ -19,22 +19,14 @@ export class FilmItemComponent implements OnInit {
 
   constructor() { }
 
-  addToFavorites(filmId) {
-    this.film.favorite = true;
+  toggleFavorites(filmId) {
+    this.film.favorite = !this.film.favorite;
     this.changeFavorite.emit({
       filmId,
-      addToFavorite: true
+      favorite: this.film.favorite
     });
   }
 
-  removeFromFavorites(filmId) {
-    this.film.favorite = false;
-    this.changeFavorite.emit({
-      filmId,
-      addToFavorite: false
-    });
-  }  
-  
   ngOnInit() {
   }
 

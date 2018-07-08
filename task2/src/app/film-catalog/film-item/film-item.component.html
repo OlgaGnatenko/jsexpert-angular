@@ -15,9 +15,7 @@
       <span>{{film.description}}</span>
   </mat-card-content>
   <mat-card-actions class="film-actions">
-    <button mat-button disabled={{film.favorite}} (click)=addToFavorites(film.id)>Добавить в избранное</button>
-    <button *ngIf="film.favorite" (click)=removeFromFavorites(film.id)>
-      <span class="heart">&hearts;</span>
-    </button>
+    <button mat-button (click)=toggleFavorites(film.id)>{{film.favorite ? "Убрать из избранного" : "Добавить в избранное"}}</button>
+    <span class="heart" *ngIf="film.favorite">&hearts;</span>
   </mat-card-actions>
 </mat-card>
