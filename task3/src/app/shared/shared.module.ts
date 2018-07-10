@@ -9,7 +9,6 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 
 @NgModule({
   imports: [
-    CommonModule,
     FormsModule,
     MatCardModule,
     MatButtonModule,
@@ -18,7 +17,6 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MatToolbarModule
   ],
   exports: [
-    CommonModule,
     FormsModule,
     MatCardModule,
     MatButtonModule,

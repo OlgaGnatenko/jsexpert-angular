@@ -30,14 +30,21 @@ export class FilmsListComponent implements OnInit {
   constructor(public filmsService: FilmService) {
   }
 
-  // setUpdatedValue(eventParam){
-  //   // this.filmsService
-  //   // this.aditionalTitle = eventParam;
-  //   // console.log(event);
-  // }
-
   ngOnInit() {
     this.films = this.filmsService.getFilms();
+  }
+
+  // sortStrings orders two strings according to a given direction
+  sortStrings(direct: number, str1: string, str2: string) {
+    const lowerA = str1 ? str1.toLowerCase() : "";
+    const lowerB = str2 ? str2.toLowerCase() : "";
+    if (lowerA > lowerB) {
+      return direct;
+    }
+    if (lowerA < lowerB) {
+      return -1 * direct;
+    }
+    return 0;
   }
 
   sortFilms(evt) {
@@ -47,27 +54,16 @@ export class FilmsListComponent implements OnInit {
     const { value } = evt;
     switch (value) {
       case 'ASC':
-        this.films.sort((a: Film, b: Film): number => {
-          if (a.name < b.name) { return -1; }
-          if (a.name === b.name) { return 0; }
-          return 1;
-        });
+        this.films.sort((a: Film, b: Film): number => this.sortStrings(1, a.name, b.name));
         break;
       case 'DESC':
-        this.films.sort((a: Film, b: Film): number => {
-          if (a.name > b.name) { return -1; }
-          if (a.name === b.name) { return 0; }
-          return 1;
-        });
+        this.films.sort((a: Film, b: Film): number => this.sortStrings(-1, a.name, b.name));
         break;
     }
   }
 
   updateFavorites(evt) {
-    if (!evt) {
-      return;
-    }
-    const {filmId, favorite} = evt;
+    const { filmId, favorite } = evt;
     favorite ? this.favoritesCount++ : this.favoritesCount--;
   }
 

@@ -19,10 +19,10 @@ export class FilmItemComponent implements OnInit {
 
   constructor() { }
 
-  toggleFavorites(filmId) {
+  toggleFavorites() {
     this.film.favorite = !this.film.favorite;
     this.changeFavorite.emit({
-      filmId,
+      filmId: this.film.id,
       favorite: this.film.favorite
     });
   }
