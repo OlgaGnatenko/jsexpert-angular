@@ -1,0 +1,21 @@
+<!--<div>
+  <div>Input info: {{infoBlock}}</div><br>
+  <div #fullMsg>Значение поля: {{value}}</div>
+  <input [(ngModel)]='value' type="text">
+  <br>
+  <button (click)="setToParent(fullMsg)">Перенести в родительский</button>
+</div>-->
+
+<mat-card class="film-card">
+  <mat-card-header class="film-header">
+    <mat-card-title>{{film.name}}</mat-card-title>
+  </mat-card-header>
+  <img mat-card-image src="{{film.imgUrl}}" alt="{{film.name}}">
+  <mat-card-content class="film-content">
+      <span>{{film.description}}</span>
+  </mat-card-content>
+  <mat-card-actions class="film-actions">
+    <button mat-button (click)=toggleFavorites(film.id)>{{film.favorite ? "Убрать из избранного" : "Добавить в избранное"}}</button>
+    <span class="heart" *ngIf="film.favorite">&hearts;</span>
+  </mat-card-actions>
+</mat-card>
