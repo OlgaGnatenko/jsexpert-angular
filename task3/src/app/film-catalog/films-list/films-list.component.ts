@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FilmService } from '../film.service';
 import { Film } from '../../shared/models/film.model';
+import { UtilsService } from '../../shared/services/utils.service';
+
 
 export interface SortingOption {
   value: string;
@@ -27,25 +29,14 @@ export class FilmsListComponent implements OnInit {
     }
   ];
 
-  constructor(public filmsService: FilmService) {
+  constructor(public filmsService: FilmService, private utils: UtilsService) {
   }
 
   ngOnInit() {
     this.films = this.filmsService.getFilms();
   }
 
-  // sortStrings orders two strings according to a given direction
-  sortStrings(direct: number, str1: string, str2: string) {
-    const lowerA = str1 ? str1.toLowerCase() : "";
-    const lowerB = str2 ? str2.toLowerCase() : "";
-    if (lowerA > lowerB) {
-      return direct;
-    }
-    if (lowerA < lowerB) {
-      return -1 * direct;
-    }
-    return 0;
-  }
+
 
   sortFilms(evt) {
     if (!evt) {
@@ -54,10 +45,10 @@ export class FilmsListComponent implements OnInit {
     const { value } = evt;
     switch (value) {
       case 'ASC':
-        this.films.sort((a: Film, b: Film): number => this.sortStrings(1, a.name, b.name));
+        this.films.sort((a: Film, b: Film): number => this.utils.compareStrings(1, a.name, b.name));
         break;
       case 'DESC':
-        this.films.sort((a: Film, b: Film): number => this.sortStrings(-1, a.name, b.name));
+        this.films.sort((a: Film, b: Film): number => this.utils.compareStrings(-1, a.name, b.name));
         break;
     }
   }
