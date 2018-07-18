@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Subscription }  from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
@@ -7,7 +7,7 @@ import { fromEvent } from 'rxjs';
 
 import { FilmService } from '../film.service';
 import { UtilsService } from '../../shared/services/utils.service';
-import { DEBOUNCE_TIME, CARD_WIDTH, DEFAULT_ROW_COUNT } from '../../shared/models/constants.model';
+import { DEBOUNCE_TIME, CARD_WIDTH, DEFAULT_ROW_COUNT, MIN_SEARCH_LENGTH } from '../../shared/models/constants.model';
 import { FilmList, SortingOption } from '../../shared/models/film.model';
 
 
@@ -33,8 +33,10 @@ export class FilmsListComponent implements OnInit {
 
   filmsShown: number;
   cardsPerRow: number;
+
+  minSearchLength = MIN_SEARCH_LENGTH;
   
-  constructor(public filmsService: FilmService, private utils: UtilsService) {
+  constructor(public filmsService: FilmService, private utils: UtilsService, element: ElementRef) {
   }
 
   ngOnInit() {
@@ -82,15 +84,14 @@ export class FilmsListComponent implements OnInit {
   searchFilms(search: string): void {
     this.search = search;
     // if search string is less than 2 symbols, then we should not search yet 
-    // if (this.search.length < 2 && this.search.length > 0) {
-    //   return;
-    // }
+    if (this.search.length < MIN_SEARCH_LENGTH && this.search.length > 0) {
+      return;
+    }
     this.filmList = this.filmsService.getFilmsByParams({
       "sort": this.currentSort.value,
       "filmsShown": this.filmsShown,
       search,
     });
-    // this.filmsShown = this.filmList.films.length;
   }
 
   updateFavorites(evt): void {
