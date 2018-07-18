@@ -17,4 +17,12 @@ export class UtilsService {
         }
         return 0;
     }
+
+    // function receives the number of items per row given item width and current window  
+    getItemsPerRow(size: number): number {
+        const width = window.innerWidth
+            || document.documentElement.clientWidth
+            || document.body.clientWidth;
+        return Math.floor(width / size);
+    }
 }

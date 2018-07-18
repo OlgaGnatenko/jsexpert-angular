@@ -1,13 +1,15 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { Subscription }  from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
+import { fromEvent } from 'rxjs';
+
+
 import { FilmService } from '../film.service';
-import { Film } from '../../shared/models/film.model';
 import { UtilsService } from '../../shared/services/utils.service';
+import { DEBOUNCE_TIME, CARD_WIDTH, DEFAULT_ROW_COUNT } from '../../shared/models/constants.model';
+import { FilmList, SortingOption } from '../../shared/models/film.model';
 
-
-export interface SortingOption {
-  value: string;
-  viewValue: string;
-}
 
 @Component({
   selector: 'app-films-list',
@@ -16,46 +18,104 @@ export interface SortingOption {
 })
 
 export class FilmsListComponent implements OnInit {
-  favoritesCount = 0;
-  films: Array<Film>;
-  sortingOptions: SortingOption[] = [
-    {
-      value: 'ASC',
-      viewValue: 'По алфавиту: A-Z'
-    },
-    {
-      value: 'DESC',
-      viewValue: 'По алфавиту: Z-A'
-    }
-  ];
+  favoritesCount: number;
+  filmList: FilmList;
 
+  sortingOptions: Array<SortingOption>;
+  currentSort: SortingOption;
+
+  showSearch = false;
+  search: string;
+  searchControl = new FormControl();
+  searchControlSubscription: Subscription;
+
+  resizeSubscription: Subscription;
+
+  filmsShown: number;
+  cardsPerRow: number;
+  
   constructor(public filmsService: FilmService, private utils: UtilsService) {
   }
 
   ngOnInit() {
-    this.films = this.filmsService.getFilms();
+    this.sortingOptions = this.filmsService.getSortingOptions();
+    this.currentSort = this.filmsService.getDefaultSort();
+    this.favoritesCount = this.filmsService.getFavoritesCount();
+    this.search = "";
+
+    this.cardsPerRow = this.utils.getItemsPerRow(CARD_WIDTH);
+
+    this.filmsShown = this.cardsPerRow * DEFAULT_ROW_COUNT;
+
+    this.filmList = this.filmsService.getFilmsByParams({"filmsShown" : this.filmsShown});
+
+    this.searchControlSubscription = this.searchControl.valueChanges
+      .pipe(debounceTime(DEBOUNCE_TIME))
+      .subscribe((str: string) => this.searchFilms(str));
+
+    this.resizeSubscription = fromEvent(window, 'resize')
+      .pipe(debounceTime(DEBOUNCE_TIME))
+      .subscribe((e: Event) => this.updatePagePerRow());
   }
 
+  ngOnDestroy() {
+    this.searchControlSubscription.unsubscribe();
+    this.resizeSubscription.unsubscribe();
+  }
 
+  searchStyleConfig = {
+    'visibility': this.showSearch ? 'visible' : 'hidden'
+  }
 
-  sortFilms(evt) {
-    if (!evt) {
-      return;
-    }
+  sortFilms(evt): void {
     const { value } = evt;
-    switch (value) {
-      case 'ASC':
-        this.films.sort((a: Film, b: Film): number => this.utils.compareStrings(1, a.name, b.name));
-        break;
-      case 'DESC':
-        this.films.sort((a: Film, b: Film): number => this.utils.compareStrings(-1, a.name, b.name));
-        break;
+    if (this.currentSort.value !== value ) {
+      this.currentSort = this.sortingOptions.find((option) => value === option.value);
+      this.filmList = this.filmsService.getFilmsByParams({
+        "sort": value, 
+        "search": this.search,
+        "filmsShown": this.filmsShown
+      });
     }
   }
 
-  updateFavorites(evt) {
-    const { filmId, favorite } = evt;
+  searchFilms(search: string): void {
+    this.search = search;
+    // if search string is less than 2 symbols, then we should not search yet 
+    // if (this.search.length < 2 && this.search.length > 0) {
+    //   return;
+    // }
+    this.filmList = this.filmsService.getFilmsByParams({
+      "sort": this.currentSort.value,
+      "filmsShown": this.filmsShown,
+      search,
+    });
+    // this.filmsShown = this.filmList.films.length;
+  }
+
+  updateFavorites(evt): void {
+    const { favorite } = evt;
     favorite ? this.favoritesCount++ : this.favoritesCount--;
+  }
+
+  toggleSearch(): void {
+    this.showSearch = !this.showSearch;
+  }
+
+  updatePagePerRow(): void {
+    this.cardsPerRow = this.utils.getItemsPerRow(CARD_WIDTH);
+  }
+
+  getMoreFilms(): void {
+    const extraCardsInLastRow = this.filmsShown % this.cardsPerRow;
+    const emptyCardSpaces = extraCardsInLastRow ? (this.cardsPerRow - extraCardsInLastRow) : 0;
+    const newFilmsShown = this.filmsShown + this.cardsPerRow + emptyCardSpaces;
+    this.filmList = this.filmsService.getFilmsByParams({
+      "filmsShown": newFilmsShown,
+      "sort": this.currentSort.value,
+      "search": this.search
+    });
+    this.filmsShown = newFilmsShown;
   }
 
 }

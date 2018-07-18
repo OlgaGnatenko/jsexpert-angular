@@ -1,0 +1,3 @@
+export const DEBOUNCE_TIME = 500;
+export const CARD_WIDTH = 350;
+export const DEFAULT_ROW_COUNT = 2;

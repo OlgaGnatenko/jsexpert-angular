@@ -4,6 +4,8 @@ import { SharedModule } from '../shared/shared.module';
 import { MainComponent } from './main/main.component';
 import { FilmsListComponent } from './films-list/films-list.component';
 import { FilmItemComponent } from './film-item/film-item.component';
+import { UtilsService } from '../shared/services/utils.service';
+
 
 @NgModule({
   imports: [
@@ -14,6 +16,9 @@ import { FilmItemComponent } from './film-item/film-item.component';
     MainComponent,
     FilmsListComponent,
     FilmItemComponent
+  ],
+  providers: [
+    UtilsService
   ]
 })
 export class FilmCatalogModule { }

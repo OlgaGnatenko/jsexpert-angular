@@ -2,20 +2,44 @@
     <mat-toolbar class="menu-toolbar">
         <mat-toolbar-row>
             <span>В избранное добавлено: {{favoritesCount}} элементов</span>
-            <span class="example-spacer"></span>
-            <div>
+            <span class="films-list-spacer"></span>
+            <div class="films-sort">
                 <mat-form-field>
-                    <mat-select placeholder="Сортировка" (selectionChange)="sortFilms($event)">
+                    <mat-select placeholder="Сортировка" (selectionChange)="sortFilms($event)" value="{{currentSort.value}}">
                         <mat-option [value]="sortingOption.value " *ngFor="let sortingOption of sortingOptions ">
                             {{sortingOption.viewValue}}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
+            <div class="films-search-toggle">
+                <button mat-button (click)="toggleSearch()">
+                    <mat-icon>search</mat-icon>
+                </button>
+            </div>
+        </mat-toolbar-row>
+    </mat-toolbar>
+    <mat-toolbar class="search-toolbar" *ngIf="showSearch">
+        <mat-toolbar-row>
+            <div class="films-search">
+                <mat-form-field>
+                    <input matInput [value]="search" [formControl]="searchControl" placeholder="Поиск фильма по имени (от 2 символов)">
+                </mat-form-field>
+            </div>
         </mat-toolbar-row>
     </mat-toolbar>
 </mat-card>
-<div class="films-cards" >
-    <app-film-item [film]="film " *ngFor="let film of films " (changeFavorite)="updateFavorites($event)">
+<div class="films-cards" *ngIf="filmList.films.length > 0; else noFilmsFound">
+    <app-film-item [film]="film " *ngFor="let film of filmList.films " (changeFavorite)="updateFavorites($event)">
     </app-film-item>
+</div>
+<ng-template #noFilmsFound>
+    <div class="films-missing">
+        <p>Фильмы не найдены</p>
+    </div>
+</ng-template>
+<div class="films-get">
+    <button mat-button class="films-get__btn" [disabled]="filmList.lastPage" (click)="getMoreFilms()">
+        Загрузить еще <mat-icon class="films-get__icon">autorenew</mat-icon>
+    </button>
 </div>
