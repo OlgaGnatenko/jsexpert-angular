@@ -1,0 +1,20 @@
+<mat-card class="film-card">
+  <mat-card-header class="film-header">
+    <mat-card-title>{{film.name}}</mat-card-title>
+  </mat-card-header>
+  <img mat-card-image src="{{film.imgUrl}}" alt="{{film.name}}">
+  <mat-card-content class="film-content">
+    <span>{{film.description}}</span>
+  </mat-card-content>
+  <mat-card-actions class="film-actions">
+    <button mat-button>
+      <mat-icon class="film-icons">play_arrow</mat-icon>
+    </button>
+    <button mat-button>
+      <mat-icon class="film-icons">notes</mat-icon>
+    </button>    
+    <button mat-button (click)=toggleFavorites(film.id)>
+      <mat-icon>{{film.favorite ? 'favorite' : 'favorite_border'}}</mat-icon>
+    </button>
+  </mat-card-actions>
+</mat-card>
