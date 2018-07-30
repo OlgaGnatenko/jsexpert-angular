@@ -1,6 +1,6 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Subscription }  from 'rxjs';
+import { Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { fromEvent } from 'rxjs';
 
@@ -35,7 +35,7 @@ export class FilmsListComponent implements OnInit {
   cardsPerRow: number;
 
   minSearchLength = MIN_SEARCH_LENGTH;
-  
+
   constructor(public filmsService: FilmService, private utils: UtilsService, element: ElementRef) {
   }
 
@@ -49,7 +49,7 @@ export class FilmsListComponent implements OnInit {
 
     this.filmsShown = this.cardsPerRow * DEFAULT_ROW_COUNT;
 
-    this.filmList = this.filmsService.getFilmsByParams({"filmsShown" : this.filmsShown});
+    this.filmList = this.filmsService.getFilmsByParams({ "filmsShown": this.filmsShown });
 
     this.searchControlSubscription = this.searchControl.valueChanges
       .pipe(debounceTime(DEBOUNCE_TIME))
@@ -60,21 +60,21 @@ export class FilmsListComponent implements OnInit {
       .subscribe((e: Event) => this.updatePagePerRow());
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.searchControlSubscription.unsubscribe();
     this.resizeSubscription.unsubscribe();
   }
 
-  searchStyleConfig = {
-    'visibility': this.showSearch ? 'visible' : 'hidden'
-  }
+  // searchStyleConfig = {
+  //   'visibility': this.showSearch ? 'visible' : 'hidden'
+  // }
 
   sortFilms(evt): void {
     const { value } = evt;
-    if (this.currentSort.value !== value ) {
+    if (this.currentSort.value !== value) {
       this.currentSort = this.sortingOptions.find((option) => value === option.value);
       this.filmList = this.filmsService.getFilmsByParams({
-        "sort": value, 
+        "sort": value,
         "search": this.search,
         "filmsShown": this.filmsShown
       });

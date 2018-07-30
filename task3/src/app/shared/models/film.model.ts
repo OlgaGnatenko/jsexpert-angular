@@ -13,12 +13,12 @@ export interface SortingOption {
 }
 
 export interface FilmListParams {
-  filmsShown?: number,
-  search?: string,
-  sort?: string
+  filmsShown?: number;
+  search?: string;
+  sort?: string;
 }
 
 export interface FilmList {
-  films: Array<Film>,
-  lastPage: Boolean
+  films: Array<Film>;
+  lastPage: Boolean;
 }
