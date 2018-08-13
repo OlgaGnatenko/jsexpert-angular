@@ -60,6 +60,7 @@ export class FilmsListComponent implements OnInit {
       .subscribe((e: Event) => this.updatePagePerRow());
   }
 
+  // tslint:disable-next-line:use-life-cycle-interface
   ngOnDestroy(): void {
     this.searchControlSubscription.unsubscribe();
     this.resizeSubscription.unsubscribe();
