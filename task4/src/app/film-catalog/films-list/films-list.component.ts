@@ -1,6 +1,6 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit, ElementRef, OnDestroy } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Subscription }  from 'rxjs';
+import { Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { fromEvent } from 'rxjs';
 
@@ -17,7 +17,7 @@ import { FilmList, SortingOption } from '../../shared/models/film.model';
   styleUrls: ['./films-list.component.css']
 })
 
-export class FilmsListComponent implements OnInit {
+export class FilmsListComponent implements OnInit, OnDestroy {
   favoritesCount: number;
   filmList: FilmList;
 
@@ -35,7 +35,11 @@ export class FilmsListComponent implements OnInit {
   cardsPerRow: number;
 
   minSearchLength = MIN_SEARCH_LENGTH;
-  
+
+  searchStyleConfig = {
+    'visibility': this.showSearch ? 'visible' : 'hidden'
+  };
+
   constructor(public filmsService: FilmService, private utils: UtilsService, element: ElementRef) {
   }
 
@@ -49,7 +53,7 @@ export class FilmsListComponent implements OnInit {
 
     this.filmsShown = this.cardsPerRow * DEFAULT_ROW_COUNT;
 
-    this.filmList = this.filmsService.getFilmsByParams({"filmsShown" : this.filmsShown});
+    this.filmList = this.filmsService.getFilmsByParams({ "filmsShown": this.filmsShown });
 
     this.searchControlSubscription = this.searchControl.valueChanges
       .pipe(debounceTime(DEBOUNCE_TIME))
@@ -65,16 +69,14 @@ export class FilmsListComponent implements OnInit {
     this.resizeSubscription.unsubscribe();
   }
 
-  searchStyleConfig = {
-    'visibility': this.showSearch ? 'visible' : 'hidden'
-  }
+
 
   sortFilms(evt): void {
     const { value } = evt;
-    if (this.currentSort.value !== value ) {
+    if (this.currentSort.value !== value) {
       this.currentSort = this.sortingOptions.find((option) => value === option.value);
       this.filmList = this.filmsService.getFilmsByParams({
-        "sort": value, 
+        "sort": value,
         "search": this.search,
         "filmsShown": this.filmsShown
       });
@@ -83,7 +85,7 @@ export class FilmsListComponent implements OnInit {
 
   searchFilms(search: string): void {
     this.search = search;
-    // if search string is less than 2 symbols, then we should not search yet 
+    // if search string is less than 2 symbols, then we should not search yet
     if (this.search.length < MIN_SEARCH_LENGTH && this.search.length > 0) {
       return;
     }

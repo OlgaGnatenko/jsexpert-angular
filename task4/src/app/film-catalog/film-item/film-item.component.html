@@ -1,22 +1,26 @@
 <mat-card class="film-card">
-  <mat-card-header class="film-header">
-    <div class="film-header-logo"></div>
-    <mat-card-title>{{film.name}}</mat-card-title>
-    <mat-card-title>{{film.name}}</mat-card-title>
-    <div class="film-rating"></div>
-  </mat-card-header>
+  <div class="film-header" title="{{film.name}}">
+    <div class="film-header_logo"></div>
+    <div class="film-header_title">
+      <span>{{film.shortName}}</span>
+    </div>
+    <div class="film-header_year">{{film.year}}</div>
+  </div>
   <img mat-card-image src="{{film.imgUrl}}" alt="{{film.name}}">
+  <div class="film-rating" title="{{film.rating || ''}}">
+    <bar-rating [readOnly]="true" [rate]="7.5" [max]="10"></bar-rating>
+  </div>
   <mat-card-content class="film-content">
-    <span>{{film.description}}</span>
+    <span title={{film.description}}>{{film.shortDescription}}</span>
   </mat-card-content>
   <mat-card-actions class="film-actions">
-    <button mat-button>
+    <button mat-button disabled>
       <mat-icon class="film-icons">play_arrow</mat-icon>
     </button>
     <button mat-button>
       <mat-icon class="film-icons">notes</mat-icon>
     </button>
-    <button mat-button (click)=toggleFavorites(film.id)>
+    <button mat-button (click)=toggleFavorites(film.id) [ngClass]="{'favorite': film.favorite}">
       <mat-icon>{{film.favorite ? 'favorite' : 'favorite_border'}}</mat-icon>
     </button>
   </mat-card-actions>

@@ -7,7 +7,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material';
-
+import { BarRatingModule } from "ngx-bar-rating";
 
 
 @NgModule({
@@ -20,7 +20,8 @@ import { MatInputModule } from '@angular/material';
     MatSelectModule,
     MatToolbarModule,
     MatIconModule,
-    MatInputModule
+    MatInputModule,
+    BarRatingModule
   ],
   exports: [
     FormsModule,
@@ -31,7 +32,8 @@ import { MatInputModule } from '@angular/material';
     MatSelectModule,
     MatToolbarModule,
     MatIconModule,
-    MatInputModule
+    MatInputModule,
+    BarRatingModule
   ]
 })
 

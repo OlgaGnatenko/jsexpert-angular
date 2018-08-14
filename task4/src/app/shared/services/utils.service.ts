@@ -18,11 +18,23 @@ export class UtilsService {
         return 0;
     }
 
-    // function receives the number of items per row given item width and current window  
+    // function receives the number of items per row given item width and current window
     getItemsPerRow(size: number): number {
         const width = window.innerWidth
             || document.documentElement.clientWidth
             || document.body.clientWidth;
         return Math.floor(width / size);
     }
+
+    // function converts string into truncated string + ellipsis (...) if the string exceeds specified value
+    truncateString(str: string, maxLength: number): string {
+        if (!str) {
+            return;
+        }
+        if (str.length > maxLength) {
+            return str.slice(0, maxLength) + "...";
+        }
+        return str;
+    }
+
 }
