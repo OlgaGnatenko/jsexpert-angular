@@ -1,17 +1,16 @@
-<mat-card class="film-card">
-  <div class="film-header" title="{{film.title}}">
-    <div class="film-header_logo"></div>
-    <div class="film-header_title">
-      <span>{{film.shortTitle}}</span>
+<mat-card class="person-card">
+  <div class="person-header" title="{{person.name}}">
+    <div class="person-header_logo"></div>
+    <div class="person-header_title">
+      <span>{{person.shortName}}</span>
     </div>
-    <div class="film-header_year">{{film.year}}</div>
   </div>
-  <img mat-card-image src="{{film.posterPath}}" alt="{{film.title}}">
-  <div class="film-rating" title="{{film.voteAverage || ''}}">
-    <bar-rating [readOnly]="true" [rate]="film.voteAverage" [max]="10"></bar-rating>
+  <img mat-card-image src="{{person.posterPath}}" alt="{{person.name}}">
+  <div class="film-rating" title="{{film.rating || ''}}">
+    <bar-rating [readOnly]="true" [rate]="7.5" [max]="10"></bar-rating>
   </div>
   <mat-card-content class="film-content">
-    <span title={{film.overview}}>{{film.shortOverview}}</span>
+    <span title={{film.description}}>{{film.shortDescription}}</span>
   </mat-card-content>
   <mat-card-actions class="film-actions">
     <button mat-button disabled>

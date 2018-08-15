@@ -1,0 +1,87 @@
+:host {
+    display: flex;
+    height: 750px;
+    margin: 30px;
+}
+
+.person-card {
+    width: 300px;
+    max-height: 750px;
+    overflow: hidden; 
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    max-width: 300px; /* override mat-card default */
+}
+
+.person-header {
+    display: flex;
+    flex:0 0 auto;
+    width: 100%;
+    height: 75px;
+    font-size:18px;
+    align-items: center;
+}
+
+.person-header_logo {
+    width: 40px;
+    height: 40px;
+    background-image: url('./../../../assets/1.png');
+    background-size: cover;
+    margin-left: 10px;
+}
+
+.person-header_title {
+    display: flex;
+    margin: 0;
+    width: 190px;
+    justify-content: center;
+    padding: 0 5px;
+}
+
+.person-rating {
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+}
+
+.mat-card-image {
+    flex: 0 0 auto;
+    margin: 0;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.mat-card-actions:last-child {
+    flex:0 0 auto;
+    margin-bottom: 0;
+    bottom: 0;   
+    padding: 0;
+}
+
+.mat-card-content {
+    flex: 1 1 auto;
+    position: relative; 
+    max-height: 130px;
+    margin-bottom: 15px;
+    padding: 5px 15px;
+    overflow: hidden;
+}
+
+.person-actions {
+    height: 40px;
+    flex: 0 0 auto;
+    margin-bottom: 0;
+    bottom: 0;
+}
+
+.person-actions .mat-button {
+    padding: 0;
+}
+
+.favorite {
+    color: mediumvioletred;
+}
+  

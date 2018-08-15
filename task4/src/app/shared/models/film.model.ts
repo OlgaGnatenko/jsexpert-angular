@@ -1,13 +1,14 @@
 export class Film {
   id: number;
-  name: string;
-  shortName?: string;
+  title: string;
+  shortTitle?: string;
+  releaseDate?: string;
   year: number;
-  imgUrl: string;
-  description: string;
-  shortDescription?: string;
+  posterPath: string;
+  overview: string;
+  shortOverview?: string;
+  voteAverage?: number;
   favorite?: boolean;
-  rating?: number;
 }
 
 export interface SortingOption {
