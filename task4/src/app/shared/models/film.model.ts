@@ -3,7 +3,7 @@ export class Film {
   title: string;
   shortTitle?: string;
   releaseDate?: string;
-  year: number;
+  year?: number;
   posterPath: string;
   overview: string;
   shortOverview?: string;
@@ -19,7 +19,6 @@ export interface SortingOption {
 export interface FilmListParams {
   filmsShown?: number;
   search?: string;
-  sort?: string;
 }
 
 export interface FilmList {

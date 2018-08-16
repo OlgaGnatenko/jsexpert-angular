@@ -6,4 +6,5 @@ export class Person {
     posterPath: string;
     filmsKnown?: string;
     shortFilmsKnown?: string;
+    favorite?: boolean;
 }
