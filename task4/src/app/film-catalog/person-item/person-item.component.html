@@ -6,21 +6,18 @@
     </div>
   </div>
   <img mat-card-image src="{{person.posterPath}}" alt="{{person.name}}">
-  <div class="film-rating" title="{{film.rating || ''}}">
+  <div class="person-rating" title="{{person.popularity || ''}}">
     <bar-rating [readOnly]="true" [rate]="7.5" [max]="10"></bar-rating>
   </div>
-  <mat-card-content class="film-content">
-    <span title={{film.description}}>{{film.shortDescription}}</span>
+  <mat-card-content class="person-content">
+    <span title={{person.description}}>{{person.shortFilmsKnown}}</span>
   </mat-card-content>
-  <mat-card-actions class="film-actions">
-    <button mat-button disabled>
-      <mat-icon class="film-icons">play_arrow</mat-icon>
-    </button>
+  <mat-card-actions class="person-actions">
     <button mat-button>
       <mat-icon class="film-icons">notes</mat-icon>
     </button>
-    <button mat-button (click)=toggleFavorites(film.id) [ngClass]="{'favorite': film.favorite}">
-      <mat-icon>{{film.favorite ? 'favorite' : 'favorite_border'}}</mat-icon>
+    <button mat-button [ngClass]="{'favorite': person.favorite}">
+      <mat-icon>{{person.favorite ? 'favorite' : 'favorite_border'}}</mat-icon>
     </button>
   </mat-card-actions>
 </mat-card>
