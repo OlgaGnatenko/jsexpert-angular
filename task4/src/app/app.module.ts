@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { FilmCatalogModule } from './film-catalog/film-catalog.module';
+import { DataCatalogModule } from './data-catalog/data-catalog.module';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -18,7 +18,7 @@ import { MatCardModule } from '@angular/material/card';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FilmCatalogModule,
+    DataCatalogModule,
     BrowserAnimationsModule,
     MatToolbarModule,
     MatIconModule,

@@ -1,0 +1,59 @@
+.films-list {
+  margin: 0 75px;
+}
+
+.menu-card {
+  padding: 0px;
+}
+
+.menu-toolbar {
+  background-color: white;
+}
+
+.films-list-spacer {
+  flex: 1 1 auto;
+}
+
+.films-cards {
+  display: flex;
+  justify-content: flex-start;
+  align-items: stretch;
+  flex-wrap: wrap;
+  margin: 30px;
+}
+
+.mat-form-field {
+  width: 200px;
+}
+
+.films-search {
+  width: 100%
+}
+
+.films-search .mat-form-field {
+  width: 100%
+}
+
+.films-missing {
+  display: flex;
+  margin-bottom: 30px;
+  justify-content: center;
+  font-size: 22px;
+}
+
+.films-get {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 40px;
+}
+
+.films-get__btn {
+  font-size: 28px;
+}
+
+.films-get__icon {
+  font-size: 28px;
+  color: lightgreen;
+  margin-bottom: 10px;
+}
+

@@ -43,13 +43,13 @@ export class FilmService {
     let filmsByParams = this.films.slice();
 
     // apply search
-    if (search && !applySearchAfterList) {
+    if (search) {
       // remove special symbols to make search safe
       const safeSearch = search.replace(/[|\\{}()[\]^$+*?.]/g, '\\$&');
       filmsByParams = filmsByParams.filter((film) => film.title.toLowerCase().search(safeSearch) !== -1);
     }
 
-    const lastPage = (filmsShown >= filmsByParams.length) ? true : false;
+    const lastPage = (itemsShown >= filmsByParams.length) ? true : false;
 
     // return given number of pages
     if (filmsShown) {

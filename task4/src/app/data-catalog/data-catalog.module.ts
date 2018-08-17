@@ -2,8 +2,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from '../shared/shared.module';
 import { MainComponent } from './../main/main.component';
-import { CatalogComponent } from './catalog/data-catalog/data-catalog.component';
-import { FilmItemComponent } from './film-item/film-item.component';
+import { CatalogComponent } from './catalog/catalog.component';
+import { FilmItemComponent } from './../data-catalog/film-item/film-item.component';
+import { PersonItemComponent } from './../data-catalog/person-item/person-item.component';
 import { UtilsService } from '../shared/services/utils.service';
 
 
@@ -14,11 +15,12 @@ import { UtilsService } from '../shared/services/utils.service';
   ],
   declarations: [
     MainComponent,
-    FilmsListComponent,
-    FilmItemComponent
+    CatalogComponent,
+    FilmItemComponent,
+    PersonItemComponent
   ],
   providers: [
     UtilsService
   ]
 })
-export class FilmCatalogModule { }
+export class DataCatalogModule { }
