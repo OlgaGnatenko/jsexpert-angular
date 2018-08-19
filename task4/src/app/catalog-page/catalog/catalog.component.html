@@ -1,0 +1,15 @@
+
+<div class="films-cards" *ngIf="filmList.films.length > 0; else noFilmsFound">
+    <app-film-item [film]="film " *ngFor="let film of filmList.films " (changeFavorite)="updateFavorites($event)">
+    </app-film-item>
+</div>
+<ng-template #noFilmsFound>
+    <div class="films-missing">
+        <p>Фильмы не найдены</p>
+    </div>
+</ng-template>
+<div class="films-get">
+    <button mat-button class="films-get__btn" [disabled]="filmList.lastPage" (click)="getMoreFilms()">
+        Загрузить еще <mat-icon class="films-get__icon">autorenew</mat-icon>
+    </button>
+</div>

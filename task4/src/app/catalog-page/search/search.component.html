@@ -1,0 +1,9 @@
+<mat-toolbar class="search-toolbar" *ngIf="showSearch">
+    <mat-toolbar-row>
+        <div class="films-search">
+            <mat-form-field>
+                <input matInput [value]="search" [formControl]="searchControl" placeholder="Поиск фильма по имени (от {{minSearchLength}} символов)">
+            </mat-form-field>
+        </div>
+    </mat-toolbar-row>
+</mat-toolbar>

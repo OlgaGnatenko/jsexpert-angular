@@ -1,27 +1,22 @@
 export class Film {
   id: number;
   title: string;
-  shortTitle?: string;
-  releaseDate?: string;
-  year?: number;
-  posterPath: string;
   overview: string;
+  releaseDate: string;
+  posterPath: string;
+  voteAverage: number;
+  shortTitle?: string;
   shortOverview?: string;
-  voteAverage?: number;
   favorite?: boolean;
+  year?: number;
 }
 
-export interface SortingOption {
-  value: string;
-  viewValue: string;
-}
-
-export interface FilmListParams {
+export class FilmListParams {
   filmsShown?: number;
   search?: string;
 }
 
-export interface FilmList {
+export class FilmList {
   films: Array<Film>;
   lastPage: Boolean;
 }

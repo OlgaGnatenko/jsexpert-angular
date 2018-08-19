@@ -1,10 +1,20 @@
-export interface ListParams {
+import { Film } from './film.model';
+import { Person } from './person.model';
+
+export class ListParams {
     itemsShown?: number;
     search?: string;
     searchField?: string;
 }
 
-export interface ItemList<T> {
-    items: Array<T>;
-    lastPage: Boolean;
+export class ItemList<T> {
+    items?: Array<T>;
+    currentPage?: number;
+    totalPages?: number;
+    totalItems?: number;
+}
+
+export class CatalogData {
+    films: ItemList<Film>;
+    persons: ItemList<Person>;
 }
