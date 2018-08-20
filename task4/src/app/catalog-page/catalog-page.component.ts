@@ -27,20 +27,25 @@ export class CatalogPageComponent implements OnInit {
     params.type = selectedOptionValue;
     params.page = page;
     const apiField = `${this.selectedOptionValue}Url`;
-    params.URL = `${this.config[apiField]}/?popular${this.config["params"]}`;
+    params.URL = `${this.config[apiField]}/popular?${this.config["params"]}&page=${page}`;
     return params;
   }
 
   loadItems(selectedOptionValue: string): void {
     this.loading = true;
-    this.apiParams = this.setApiParams(this.selectedOptionValue, this.data[this.selectedOptionValue].currentPage);
+    const page = this.data[this.selectedOptionValue].currentPage + 1;
+    this.apiParams = this.setApiParams(this.selectedOptionValue, page);
     this.catalogPageService.loadMoreItems(this.apiParams).subscribe(
       data => {
         this.data[selectedOptionValue] = data;
         console.log("loadItems", this.data);
       },
       err => { console.error("Error while loading items"); },
-      () => { this.loading = false; console.log("finished loading"); }
+      () => {
+        this.loading = false;
+        this.data[this.selectedOptionValue].currentPage = page;
+        console.log("finished loading");
+      }
     );
   }
 
@@ -52,20 +57,20 @@ export class CatalogPageComponent implements OnInit {
       "value": "films",
       "viewValue": "Films"
     }, {
-        "value": "persons",
-        "viewValue": "Persons"
+      "value": "persons",
+      "viewValue": "Persons"
     }];
     this.data = {
       films: {
-          items: [],
-          currentPage: 0,
-          totalPages: 0,
-          totalItems: 0
+        items: [],
+        currentPage: 0,
+        totalPages: 0,
+        totalItems: 0
       },
       persons: {
-          currentPage: 0,
-          totalPages: 0,
-          totalItems: 0
+        currentPage: 0,
+        totalPages: 0,
+        totalItems: 0
       }
     };
 
