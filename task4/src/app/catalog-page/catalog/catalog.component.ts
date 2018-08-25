@@ -7,6 +7,7 @@ import { fromEvent } from 'rxjs';
 import { UtilsService } from '../../shared/services/utils.service';
 import { DEBOUNCE_TIME, CARD_WIDTH, DEFAULT_ROW_COUNT, MIN_SEARCH_LENGTH } from '../../shared/constants';
 import { FilmList } from '../../shared/models/film.model';
+import { ItemList } from '../../shared/models/catalog-item.model';
 
 
 @Component({
@@ -15,11 +16,8 @@ import { FilmList } from '../../shared/models/film.model';
   styleUrls: ['./catalog.component.css']
 })
 
-export class CatalogComponent implements OnInit, OnDestroy {
-  favoritesCount: number;
-  filmList: FilmList;
-
-  showSearch = false;
+export class CatalogComponent<T> implements OnInit, OnDestroy {
+  itemList: ItemList<T>;
   search: string;
   searchControl = new FormControl();
   searchControlSubscription: Subscription;
@@ -30,10 +28,6 @@ export class CatalogComponent implements OnInit, OnDestroy {
   cardsPerRow: number;
 
   minSearchLength = MIN_SEARCH_LENGTH;
-
-  searchStyleConfig = {
-    'visibility': this.showSearch ? 'visible' : 'hidden'
-  };
 
   constructor(private utils: UtilsService, element: ElementRef) {
   }

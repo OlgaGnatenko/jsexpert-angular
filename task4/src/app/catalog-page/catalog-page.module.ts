@@ -23,6 +23,7 @@ import { APIConfig } from './api.config';
   ],
   providers: [
     UtilsService,
+    CatalogPageService,
     APIConfig
   ]
 })

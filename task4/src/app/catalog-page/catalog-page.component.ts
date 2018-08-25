@@ -3,7 +3,6 @@ import { ItemList, CatalogData } from '../shared/models/catalog-item.model';
 import { Film } from '../shared/models/film.model';
 import { Person } from '../shared/models/person.model';
 import { CatalogOption } from '../shared/models/catalog-option.model';
-import { APIParams } from '../shared/models/api-params.model';
 import { APIConfig } from './api.config';
 import { CatalogPageService } from './catalog-page.service';
 import { UtilsService } from '../shared/services/utils.service';
@@ -20,22 +19,12 @@ export class CatalogPageComponent implements OnInit {
   loading: boolean;
   catalogOptions: CatalogOption[];
   selectedOptionValue: string;
-  apiParams: APIParams;
 
-  setApiParams(selectedOptionValue: string, page: number): APIParams {
-    const params: APIParams = new APIParams();
-    params.type = selectedOptionValue;
-    params.page = page;
-    const apiField = `${this.selectedOptionValue}Url`;
-    params.URL = `${this.config[apiField]}/popular?${this.config["params"]}&page=${page}`;
-    return params;
-  }
 
   loadItems(selectedOptionValue: string): void {
     this.loading = true;
     const page = this.data[this.selectedOptionValue].currentPage + 1;
-    this.apiParams = this.setApiParams(this.selectedOptionValue, page);
-    this.catalogPageService.loadMoreItems(this.apiParams).subscribe(
+    this.catalogPageService.loadMoreItems(this.selectedOptionValue, page).subscribe(
       data => {
         this.data[selectedOptionValue] = data;
         console.log("loadItems", this.data);
