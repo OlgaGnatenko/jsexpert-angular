@@ -19,7 +19,7 @@ export class CatalogPageService {
     data: CatalogData;
     apiParams: APIParams;
 
-    constructor(private http: HttpClient, private utils: UtilsService ) {
+    constructor(private http: HttpClient, private utils: UtilsService, private config: APIConfig ) {
         this.data = {
             films: {
                 items: [],
@@ -40,7 +40,7 @@ export class CatalogPageService {
         params.type = selectedOptionValue;
         params.page = page;
         const apiField = `${selectedOptionValue}Url`;
-        params.URL = `${APIConfig[apiField]}/popular?${APIConfig["params"]}&page=${page}`;
+        params.URL = `${this.config[apiField]}/popular?${this.config["params"]}&page=${page}`;
         return params;
     }
 

@@ -4,9 +4,3 @@ export class APIParams {
     page: number;
 }
 
-export class APIResponse<T> {
-    page?: number;
-    results?: Array<T>;
-    total_results?: number;
-    total_pages?: number;
-}

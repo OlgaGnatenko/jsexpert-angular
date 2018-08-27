@@ -1,14 +1,6 @@
-import { Component, OnInit, ElementRef, OnDestroy } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { Subscription } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
-import { fromEvent } from 'rxjs';
-
+import { Component, Input, OnInit, ElementRef, OnDestroy, AfterViewInit } from '@angular/core';
 import { UtilsService } from '../../shared/services/utils.service';
-import { DEBOUNCE_TIME, CARD_WIDTH, DEFAULT_ROW_COUNT, MIN_SEARCH_LENGTH } from '../../shared/constants';
-import { FilmList } from '../../shared/models/film.model';
-import { ItemList } from '../../shared/models/catalog-item.model';
-
+import { CatalogContent, CatalogSettings } from '../../shared/models/catalog-option.model';
 
 @Component({
   selector: 'app-catalog',
@@ -16,41 +8,31 @@ import { ItemList } from '../../shared/models/catalog-item.model';
   styleUrls: ['./catalog.component.css']
 })
 
-export class CatalogComponent<T> implements OnInit, OnDestroy {
-  itemList: ItemList<T>;
-  search: string;
-  searchControl = new FormControl();
-  searchControlSubscription: Subscription;
+export class CatalogComponent implements OnInit, AfterViewInit, OnDestroy {
+  @Input()
+  content: CatalogContent;
+  @Input()
+  settings: CatalogSettings;
 
-  resizeSubscription: Subscription;
-
-  filmsShown: number;
-  cardsPerRow: number;
-
-  minSearchLength = MIN_SEARCH_LENGTH;
+  itemsShown: number;
+  itemsShownFrom: number;
+  // cardsPerRow: number;
 
   constructor(private utils: UtilsService, element: ElementRef) {
   }
 
   ngOnInit() {
-    this.search = "";
+    this.itemsShown = 0;
+    this.itemsShownFrom = 0;
+    console.log("init", this.content, this.settings);
+  }
 
-    // this.cardsPerRow = this.utils.getItemsPerRow(CARD_WIDTH);
-
-    // this.filmsShown = this.cardsPerRow * DEFAULT_ROW_COUNT;
-
-    // this.searchControlSubscription = this.searchControl.valueChanges
-    //   .pipe(debounceTime(DEBOUNCE_TIME))
-    //   .subscribe((str: string) => this.searchFilms(str));
-
-    // this.resizeSubscription = fromEvent(window, 'resize')
-    //   .pipe(debounceTime(DEBOUNCE_TIME))
-    //   .subscribe((e: Event) => this.updatePagePerRow());
+  ngAfterViewInit() {
+    console.log("afterviewinit", this.content, this.settings);
   }
 
   ngOnDestroy() {
-    this.searchControlSubscription.unsubscribe();
-    this.resizeSubscription.unsubscribe();
+
   }
 
   // searchFilms(search: string): void {
@@ -64,31 +46,6 @@ export class CatalogComponent<T> implements OnInit, OnDestroy {
   //     "filmsShown": this.filmsShown,
   //     search,
   //   });
-  // }
-
-  updateFavorites(evt): void {
-    const { favorite } = evt;
-    favorite ? this.favoritesCount++ : this.favoritesCount--;
-  }
-
-  toggleSearch(): void {
-    this.showSearch = !this.showSearch;
-  }
-
-  updatePagePerRow(): void {
-    this.cardsPerRow = this.utils.getItemsPerRow(CARD_WIDTH);
-  }
-
-  // getMoreFilms(): void {
-  //   const extraCardsInLastRow = this.filmsShown % this.cardsPerRow;
-  //   const emptyCardSpaces = extraCardsInLastRow ? (this.cardsPerRow - extraCardsInLastRow) : 0;
-  //   const newFilmsShown = this.filmsShown + this.cardsPerRow + emptyCardSpaces;
-  //   this.filmList = this.filmsService.getFilmsByParams({
-  //     "filmsShown": newFilmsShown,
-  //     "sort": this.currentSort.value,
-  //     "search": this.search
-  //   });
-  //   this.filmsShown = newFilmsShown;
   // }
 
 }
