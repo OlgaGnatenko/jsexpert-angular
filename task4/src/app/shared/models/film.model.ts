@@ -10,13 +10,3 @@ export class Film {
   favorite?: boolean;
   year?: number;
 }
-
-export class FilmListParams {
-  filmsShown?: number;
-  search?: string;
-}
-
-export class FilmList {
-  films: Array<Film>;
-  lastPage: Boolean;
-}

@@ -7,7 +7,7 @@ export class APIConfig {
     filmsUrl = `${this.apiUrl}/movie`;
     searchUrl = `${this.apiUrl}/search`;
     personsUrl = `${this.apiUrl}/person`;
-    params = `&api_key=${this.apiKey}&language=ru-RU`;
+    params = `api_key=${this.apiKey}&language=ru-RU`;
     imgPath = 'https://image.tmdb.org/t/p';
     midImgPath = `${this.imgPath}/w500`;
     smallImgPath = `${this.imgPath}/w185`;

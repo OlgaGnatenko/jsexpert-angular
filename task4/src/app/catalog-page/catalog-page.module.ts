@@ -8,6 +8,7 @@ import { FilmItemComponent } from './film-item/film-item.component';
 import { PersonItemComponent } from './person-item/person-item.component';
 import { UtilsService } from '../shared/services/utils.service';
 import { APIConfig } from './api.config';
+import { ProcessDataService } from './process-data.service';
 
 
 @NgModule({
@@ -23,6 +24,7 @@ import { APIConfig } from './api.config';
   ],
   providers: [
     UtilsService,
+    ProcessDataService,
     CatalogPageService,
     APIConfig
   ]

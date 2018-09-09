@@ -1,3 +1,5 @@
 <div>
-   <app-catalog [content]="catalogContent" [settings]="catalogSettings"></app-catalog>
+   <app-catalog [content$]="catalogContent$ | async" 
+        (getItemsEvent)="updateCatalogItems($event)"
+        [settings]="catalogSettings" [pages]="catalogPageSettings[selectedOptionValue]"></app-catalog>
 </div>

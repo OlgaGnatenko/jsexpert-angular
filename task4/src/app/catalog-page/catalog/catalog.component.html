@@ -1,4 +1,3 @@
-
 <div class="catalog-paging">
     <div class="catalog-paging__shown"></div>
     <div class="catalog-paging__pages">
@@ -7,10 +6,10 @@
         </div>
     </div>
 </div>
-<div class="catalog-cards" *ngIf="content.items.length > 0; else noItemsFound">
+<div class="catalog-cards" *ngIf="content$.items && content$.items.length > 0; else noItemsFound">
     <!-- <app-item [context]="item" *ngFor="let item of content.itemList.items">
     </app-item> -->
-    <div *ngFor="let item of content.items">{{item}}</div>
+    <div *ngFor="let item of content$.items">{{item}}</div>
 </div>
 <ng-template #noItemsFound>
     <div class="catalog-items-missing">
@@ -18,7 +17,7 @@
     </div>
 </ng-template>
 <div class="catalog-items-get">
-    <button mat-button class="catalog-items-get__btn" [disabled]="content.page === content.totalPages" (click)="getMoreItems()">
+    <button mat-button class="catalog-items-get__btn" (click)="getMoreItems()" [disabled]="content.page === content$.totalPages">
         Загрузить еще <mat-icon class="catalog-items-get__icon">autorenew</mat-icon>
     </button>
 </div>

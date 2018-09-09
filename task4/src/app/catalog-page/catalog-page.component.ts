@@ -1,79 +1,109 @@
-import { Component, OnInit } from '@angular/core';
-import { CatalogData, ItemList } from '../shared/models/catalog-item.model';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ItemList } from '../shared/models/item-list.model';
+import { CatalogData } from '../shared/models/catalog-data.model';
 
-import { CatalogOption, CatalogSettings, CatalogContent } from '../shared/models/catalog-option.model';
+import { CatalogOption } from '../shared/models/catalog-option.model';
+import { CatalogSettings } from '../shared/models/catalog-settings.model';
+import { CatalogContent } from '../shared/models/catalog-content.model';
 import { APIConfig } from './api.config';
 import { CatalogPageService } from './catalog-page.service';
+import { Observable, Subject, BehaviorSubject, Subscription } from 'rxjs';
+import { ItemsParams, PageParams } from '../shared/models/items-params.model';
 
 @Component({
   selector: 'app-catalog-page',
   templateUrl: './catalog-page.component.html',
   styleUrls: ['./catalog-page.component.css']
 })
-export class CatalogPageComponent implements OnInit {
-  constructor(private catalogPageService: CatalogPageService, private config: APIConfig) { }
+export class CatalogPageComponent implements OnInit, OnDestroy {
+  constructor(private catalogPageService: CatalogPageService, private config: APIConfig) {
+    this.catalogContent$ = new BehaviorSubject<CatalogContent>({
+      items: []
+    });
+    this.itemsSubcription = this.catalogPageService.getItems().subscribe((data) => {
+      this.loading = false;
+      console.log("items subscription", data, this.loading);
+      this.catalogContent$.next(data);
+    });
+  }
 
-  data: CatalogData;
   loading: boolean;
   catalogOptions: CatalogOption[];
   selectedOptionValue: string;
   catalogSettings: CatalogSettings;
-  catalogContent: CatalogContent;
+  catalogContent$: BehaviorSubject<CatalogContent>;
+  catalogPageSettings: object;
+  search: string;
+  itemsSubcription: Subscription;
 
-  loadItems(selectedOptionValue: string): void {
+  formItemsParams(): ItemsParams {
+    const {startPage, endPage} = this.catalogPageSettings[this.selectedOptionValue];
+    const {searchField} = this.catalogOptions[this.selectedOptionValue];
+    return {
+      startPage,
+      endPage,
+      searchField,
+      search: this.search
+    };
+  }
+
+  requestItems(selectedOptionValue: string, pages: PageParams): void {
     this.loading = true;
-    const page = this.data[this.selectedOptionValue].currentPage + 1;
-    this.catalogPageService.loadMoreItems(this.selectedOptionValue, page).subscribe(
-      data => {
-        this.data[selectedOptionValue] = data;
-      },
-      err => { console.error("Error while loading items", err); },
-      () => {
-        this.loading = false;
-        this.data[this.selectedOptionValue].currentPage = page;
-      }
-    );
+    this.catalogPageService.provideItems(this.selectedOptionValue, pages);
+  }
+
+
+  updateCatalogItems($event): void {
+    this.requestItems(this.selectedOptionValue, this.catalogPageSettings[this.selectedOptionValue]);
+  }
+
+  makeNotFoundText(selectedValue: string) {
+    const selectedOption = this.catalogOptions.find((item) => item.value === selectedValue);
+    if (!selectedOption) {
+      return '';
+    }
+    return `${selectedOption.viewValue} не найдены.`;
   }
 
   ngOnInit() {
     this.selectedOptionValue = "films";
     this.loading = false;
 
-    this.catalogSettings = {
-      noItemsText: "No Items Found",
-      pagination: true,
-      continuousPagination: true
+    this.catalogPageSettings = {
+      films: {
+        startPage: 1,
+        endPage: 1
+      },
+      persons: {
+        startPage: 1,
+        endPage: 1
+      }
     };
 
     this.catalogOptions = [{
       "value": "films",
-      "viewValue": "Films"
+      "viewValue": "Фильмы",
+      "searchField": "title"
     }, {
       "value": "persons",
-      "viewValue": "Persons"
+      "viewValue": "Актеры",
+      "searchField": "name"
     }];
-    this.data = {
-      films: {
-        items: [],
-        currentPage: 0,
-        totalPages: 0,
-        totalItems: 0
-      },
-      persons: {
-        items: [],
-        currentPage: 0,
-        totalPages: 0,
-        totalItems: 0
-      }
+
+    this.catalogSettings = {
+      noItemsText: this.makeNotFoundText(this.selectedOptionValue),
+      pagination: true,
+      continuousPagination: true
     };
 
-    this.catalogContent = this.data[this.selectedOptionValue];
-
     // load first portion of data
-    this.loadItems(this.selectedOptionValue);
+    this.requestItems(this.selectedOptionValue, this.catalogPageSettings[this.selectedOptionValue]);
+  }
 
-
+  ngOnDestroy() {
+    this.itemsSubcription.unsubscribe();
   }
 
 }
+
 
