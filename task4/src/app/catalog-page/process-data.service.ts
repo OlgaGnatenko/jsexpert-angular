@@ -3,11 +3,12 @@ import { UtilsService } from '../shared/services/utils.service';
 import { Film } from '../shared/models/film.model';
 import { MAX_FILM_TITLE_LENGTH, MAX_FILM_DESCR_LENGTH, MAX_PERSON_NAME_LENGTH, MAX_PERSON_DESCR_LENGTH } from '../shared/constants';
 import { Person } from '../shared/models/person.model';
+import { APIConfig } from './api.config';
 
 @Injectable()
 
 export class ProcessDataService {
-    constructor(private utils: UtilsService) {}
+    constructor(private utils: UtilsService, private config: APIConfig) {}
 
 
     processFilms(rawFilms: Array<object>): Array<Film> {
@@ -16,7 +17,7 @@ export class ProcessDataService {
             title: film["title"],
             overview: film["overview"],
             releaseDate: film["release_date"],
-            posterPath: film["poster_path"],
+            posterPath: this.config.smallImgPath + film["poster_path"],
             voteAverage: film["vote_average"],
             favorite: false,
             shortTitle: this.utils.truncateString(film["title"], MAX_FILM_TITLE_LENGTH),

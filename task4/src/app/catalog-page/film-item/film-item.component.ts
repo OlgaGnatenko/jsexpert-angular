@@ -14,18 +14,18 @@ interface ChangeFavoriteEvent {
 
 
 export class FilmItemComponent implements OnInit {
-  @Input() film: Film;
-  @Output() changeFavorite = new EventEmitter<ChangeFavoriteEvent>();
+  @Input() data: Film;
+  // @Output() changeFavorite = new EventEmitter<ChangeFavoriteEvent>();
 
   constructor() { }
 
-  toggleFavorites() {
-    this.film.favorite = !this.film.favorite;
-    this.changeFavorite.emit({
-      filmId: this.film.id,
-      favorite: this.film.favorite
-    });
-  }
+  // toggleFavorites() {
+  //   this.film.favorite = !this.film.favorite;
+  //   this.changeFavorite.emit({
+  //     filmId: this.film.id,
+  //     favorite: this.film.favorite
+  //   });
+  // }
 
   ngOnInit() {
   }

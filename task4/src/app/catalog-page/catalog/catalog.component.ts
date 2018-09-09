@@ -18,6 +18,8 @@ export class CatalogComponent implements OnInit, AfterViewInit {
   settings: CatalogSettings;
   @Input()
   pages: PageParams;
+  @Input()
+  itemComponent: Component;
   @Output()
   getItemsEvent: EventEmitter<PageParams> = new EventEmitter();
 
@@ -51,6 +53,7 @@ export class CatalogComponent implements OnInit, AfterViewInit {
   }
 
   getMoreItems() {
+    // console.log(this.content$);
     this.pages.endPage = this.pages.endPage + 1;
     this.getItems(this.pages);
   }

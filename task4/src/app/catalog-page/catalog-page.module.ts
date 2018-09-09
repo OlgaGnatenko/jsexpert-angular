@@ -9,6 +9,7 @@ import { PersonItemComponent } from './person-item/person-item.component';
 import { UtilsService } from '../shared/services/utils.service';
 import { APIConfig } from './api.config';
 import { ProcessDataService } from './process-data.service';
+import { CatalogItemComponent } from './catalog/catalog-item/catalog-item.component';
 
 
 @NgModule({
@@ -19,6 +20,11 @@ import { ProcessDataService } from './process-data.service';
   declarations: [
     CatalogPageComponent,
     CatalogComponent,
+    FilmItemComponent,
+    PersonItemComponent,
+    CatalogItemComponent
+  ],
+  entryComponents: [
     FilmItemComponent,
     PersonItemComponent
   ],

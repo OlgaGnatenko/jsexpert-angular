@@ -90,4 +90,9 @@
 .favorite {
     color: mediumvioletred;
 }
+
+/* fix negative margin of mat-card*/
+.mat-card>.mat-card-actions:last-child {
+    margin-bottom: 0;
+}
   

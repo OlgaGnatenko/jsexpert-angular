@@ -9,6 +9,7 @@ import { APIConfig } from './api.config';
 import { CatalogPageService } from './catalog-page.service';
 import { Observable, Subject, BehaviorSubject, Subscription } from 'rxjs';
 import { ItemsParams, PageParams } from '../shared/models/items-params.model';
+import { FilmItemComponent } from './film-item/film-item.component';
 
 @Component({
   selector: 'app-catalog-page',
@@ -35,6 +36,7 @@ export class CatalogPageComponent implements OnInit, OnDestroy {
   catalogPageSettings: object;
   search: string;
   itemsSubcription: Subscription;
+  component: Component;
 
   formItemsParams(): ItemsParams {
     const {startPage, endPage} = this.catalogPageSettings[this.selectedOptionValue];
@@ -79,6 +81,8 @@ export class CatalogPageComponent implements OnInit, OnDestroy {
         endPage: 1
       }
     };
+
+    this.component = FilmItemComponent as Component;
 
     this.catalogOptions = [{
       "value": "films",
