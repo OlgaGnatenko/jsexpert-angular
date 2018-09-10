@@ -22,7 +22,7 @@ export class CatalogPageComponent implements OnInit, OnDestroy {
       items: []
     });
     this.itemsSubcription = this.catalogPageService.getItems().subscribe((data) => {
-      this.loading = false;
+      // this.loading = false;
       console.log("items subscription", data, this.loading);
       this.catalogContent$.next(data);
     });

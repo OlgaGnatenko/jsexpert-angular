@@ -4,4 +4,9 @@
         [settings]="catalogSettings" [pages]="catalogPageSettings[selectedOptionValue]"
         [itemComponent]="component">
     </app-catalog>
+    <div *ngIf="loading">
+        <div class="catalog-page__loader">
+            <img src="assets/loader.gif" alt="Идет загрузка данных">
+        </div>
+    </div>
 </div>
